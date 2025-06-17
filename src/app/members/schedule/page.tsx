@@ -1,7 +1,5 @@
 'use server'
-import { redirect } from 'next/navigation'
 
-import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -18,29 +16,10 @@ import {
     Share2,
     Plus
 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
+import { getScheduledSessions } from '@/lib/dal/sessions'
 
 export default async function SchedulePage() {
-
-    const supabase = await createClient();
-    const {
-        data: { user },
-    } = await supabase.auth.getUser()
-    console.log('user information', user)
-    if (!user) {
-        redirect('/auth/signin')
-    }
-
-    // Fetch scheduled sessions for the current user
-    // Assuming a table 'user_scheduled_sessions' with user_id and session_id, and join with sessions table
-    const { data: scheduledSessions, error } = await supabase
-        .from('user_scheduled_sessions')
-        .select('session_id, sessions(*), has_conflict')
-        .eq('user_id', user.id)
-
-    if (error) {
-        return <div className="container mx-auto px-4 py-8">Failed to load schedule: {error.message}</div>
-    }
+    const scheduledSessions = await getScheduledSessions()
 
     // Map to session objects
     const sessions = (scheduledSessions || []).map((row: any) => ({
