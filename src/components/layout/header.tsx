@@ -13,8 +13,8 @@ const Header = () => {
 
     const navItems = [
         { name: 'Home', href: '/', icon: Calendar },
-        { name: 'Browse Sessions', href: '/sessions', icon: Search },
-        { name: 'My Schedule', href: '/schedule', icon: Calendar },
+        { name: 'Browse Sessions', href: '/members/sessions', icon: Search },
+        { name: 'My Schedule', href: '/members/schedule', icon: Calendar },
         { name: 'Admin', href: '/admin', icon: Settings },
     ]
 

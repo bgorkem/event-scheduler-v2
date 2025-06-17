@@ -10,7 +10,7 @@ delete from conferences;
 
 -- Insert sample conference
 insert into conferences (conference_id, name, location, start_date, end_date, url, description) values
-  (1, 'AI & Machine Learning Summit 2025', 'London, UK', '2025-06-10', '2025-06-12', 'https://aimlsummit2025.com',
+  (1, 'AI & Machine Learning Summit 2025', 'London, UK', '2025-07-10', '2025-07-12', 'https://aimlsummit2025.com',
   'A premier conference bringing together AI and ML experts, researchers, and enthusiasts to discuss the latest trends, breakthroughs, and applications in artificial intelligence and machine learning.');
 
 -- Insert sample tracks
@@ -36,16 +36,16 @@ insert into participants (participant_id, first_name, last_name, organization, e
 
 -- Insert sample sessions
 insert into sessions (session_id, conference_id, track_id, title, description, session_date, start_time, end_time, session_type, session_url) values
-  (1, 1, 1, 'State of Deep Learning 2025', 'A keynote on the latest breakthroughs in deep learning.', '2025-06-10', '09:00', '10:00', 'Keynote', null),
-  (2, 1, 2, 'Large Language Models in Practice', 'How LLMs are changing the world.', '2025-06-10', '10:30', '11:30', 'Talk', null),
-  (3, 1, 3, 'AI for Medical Imaging', 'Applications of AI in radiology and diagnostics.', '2025-06-11', '09:00', '10:00', 'Talk', null),
-  (4, 1, 4, 'Ethics of Autonomous Systems', 'Panel discussion on the ethics of self-driving cars and drones.', '2025-06-12', '14:00', '15:00', 'Panel', null),
-  (5, 1, 5, 'Robotics in Industry 4.0', 'Robotics and automation in modern manufacturing.', '2025-06-11', '11:00', '12:00', 'Talk', null),
-  (6, 1, 6, 'Building an AI Startup', 'Lessons from successful AI entrepreneurs.', '2025-06-12', '10:00', '11:00', 'Workshop', null),
-  (7, 1, 7, 'Advances in Computer Vision', 'Recent progress in image and video understanding.', '2025-06-10', '13:00', '14:00', 'Talk', null),
-  (8, 1, 2, 'Conversational AI', 'Building next-gen chatbots and assistants.', '2025-06-11', '14:00', '15:00', 'Talk', null),
-  (9, 1, 1, 'Reinforcement Learning in the Real World', 'Applications of RL in robotics and games.', '2025-06-12', '11:30', '12:30', 'Talk', null),
-  (10, 1, 3, 'AI for Drug Discovery', 'How AI is accelerating pharmaceutical research.', '2025-06-10', '15:00', '16:00', 'Talk', null);
+  (1, 1, 1, 'State of Deep Learning 2025', 'A keynote on the latest breakthroughs in deep learning.', '2025-07-10', '09:00', '10:00', 'Keynote', null),
+  (2, 1, 2, 'Large Language Models in Practice', 'How LLMs are changing the world.', '2025-07-10', '10:30', '11:30', 'Talk', null),
+  (3, 1, 3, 'AI for Medical Imaging', 'Applications of AI in radiology and diagnostics.', '2025-07-11', '09:00', '10:00', 'Talk', null),
+  (4, 1, 4, 'Ethics of Autonomous Systems', 'Panel discussion on the ethics of self-driving cars and drones.', '2025-07-12', '14:00', '15:00', 'Panel', null),
+  (5, 1, 5, 'Robotics in Industry 4.0', 'Robotics and automation in modern manufacturing.', '2025-07-11', '11:00', '12:00', 'Talk', null),
+  (6, 1, 6, 'Building an AI Startup', 'Lessons from successful AI entrepreneurs.', '2025-07-12', '10:00', '11:00', 'Workshop', null),
+  (7, 1, 7, 'Advances in Computer Vision', 'Recent progress in image and video understanding.', '2025-07-10', '13:00', '14:00', 'Talk', null),
+  (8, 1, 2, 'Conversational AI', 'Building next-gen chatbots and assistants.', '2025-07-11', '14:00', '15:00', 'Talk', null),
+  (9, 1, 1, 'Reinforcement Learning in the Real World', 'Applications of RL in robotics and games.', '2025-07-12', '11:30', '12:30', 'Talk', null),
+  (10, 1, 3, 'AI for Drug Discovery', 'How AI is accelerating pharmaceutical research.', '2025-07-10', '15:00', '16:00', 'Talk', null);
 
 -- Link participants to sessions
 insert into session_participants (session_id, participant_id, role) values
