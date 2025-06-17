@@ -51,3 +51,16 @@ export async function addSessionToSchedule(sessionId: number) {
     if (error) throw new Error(error.message)
     return true
 }
+
+export async function removeSessionFromSchedule(sessionId: number) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No user session found')
+    const { error } = await supabase
+        .from('user_scheduled_sessions')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('session_id', sessionId)
+    if (error) throw new Error(error.message)
+    return true
+}
