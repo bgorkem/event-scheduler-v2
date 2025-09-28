@@ -143,3 +143,30 @@ npm run lint:fix     # Auto-fix linting issues
 npm run format       # Format code with ESLint stylistic rules
 npm run build        # Build for production
 ```
+
+### Git Workflow - Pre-Commit Validation
+
+**CRITICAL**: Always run these commands before committing code to ensure quality and prevent CI/CD failures:
+
+```bash
+# Required pre-commit checks (run in this order)
+npm run lint         # Verify code style and catch errors
+npm run build        # Ensure project compiles successfully
+
+# Only commit if both commands pass without errors
+git add .
+git commit -m "your commit message"
+git push
+```
+
+**Why this matters:**
+- **Lint check**: Catches code style violations, potential bugs, and TypeScript errors
+- **Build check**: Ensures the application compiles and all imports/exports are valid
+- **Prevents CI failures**: Catches issues locally before they reach the build pipeline
+- **Team consistency**: Maintains code quality standards across all contributors
+
+**Automated workflow:**
+```bash
+# One-liner to check everything before commit
+npm run lint && npm run build && echo "✅ Ready to commit!"
+```
