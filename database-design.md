@@ -159,56 +159,68 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
+DECLARE
+    conflict_ids INTEGER[];
 BEGIN
-    -- First, reset all conflicts for the user
-    UPDATE user_scheduled_sessions
-    SET has_conflict = FALSE
-    WHERE user_id = target_user_id;
-
-    -- Then mark sessions that have conflicts
-    UPDATE user_scheduled_sessions
-    SET has_conflict = TRUE
-    WHERE user_id = target_user_id
-    AND id IN (
+    -- Find all sessions that have conflicts
+    SELECT ARRAY(
         SELECT DISTINCT uss1.id
         FROM user_scheduled_sessions uss1
         JOIN sessions s1 ON uss1.session_id = s1.session_id
         JOIN user_scheduled_sessions uss2 ON uss1.user_id = uss2.user_id
         JOIN sessions s2 ON uss2.session_id = s2.session_id
         WHERE uss1.user_id = target_user_id
-        AND uss1.id != uss2.id  -- Don't compare session with itself
+        AND uss1.session_id != uss2.session_id  -- Compare session_ids instead of record ids
         AND s1.session_date = s2.session_date  -- Same date
         AND (
             -- Check for time overlaps
             (s1.start_time < s2.end_time AND s1.end_time > s2.start_time)
         )
-    );
+    ) INTO conflict_ids;
+
+    -- Update all records for this user in one operation to avoid infinite recursion
+    UPDATE user_scheduled_sessions
+    SET has_conflict = CASE
+        WHEN id = ANY(COALESCE(conflict_ids, ARRAY[]::INTEGER[])) THEN TRUE
+        ELSE FALSE
+    END
+    WHERE user_id = target_user_id;
 END;
 $$;
 
--- Function to be called after insert/update/delete on user_scheduled_sessions
-CREATE OR REPLACE FUNCTION trigger_update_conflicts()
-RETURNS trigger
+-- Stored procedure to add a session to user's schedule and update conflicts
+CREATE OR REPLACE FUNCTION schedule_session_for_user(p_user_id UUID, p_session_id INTEGER)
+RETURNS void
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-    -- Handle different trigger operations
-    IF TG_OP = 'DELETE' THEN
-        PERFORM update_user_scheduling_conflicts(OLD.user_id);
-        RETURN OLD;
-    ELSE
-        PERFORM update_user_scheduling_conflicts(NEW.user_id);
-        RETURN NEW;
-    END IF;
+    -- Insert the scheduled session (will fail if already exists due to UNIQUE constraint)
+    INSERT INTO user_scheduled_sessions (user_id, session_id)
+    VALUES (p_user_id, p_session_id);
+
+    -- Update conflicts for this user
+    PERFORM update_user_scheduling_conflicts(p_user_id);
 END;
 $$;
 
--- Create triggers to automatically update conflicts
-CREATE TRIGGER user_scheduled_sessions_conflict_trigger
-    AFTER INSERT OR UPDATE OR DELETE ON user_scheduled_sessions
-    FOR EACH ROW EXECUTE FUNCTION trigger_update_conflicts();
+-- Stored procedure to remove a session from user's schedule and update conflicts
+CREATE OR REPLACE FUNCTION unschedule_session_for_user(p_user_id UUID, p_session_id INTEGER)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    -- Delete the scheduled session
+    DELETE FROM user_scheduled_sessions
+    WHERE user_id = p_user_id AND session_id = p_session_id;
+
+    -- Update conflicts for this user
+    PERFORM update_user_scheduling_conflicts(p_user_id);
+END;
+$$;
 ```
 
 ## Database Features
@@ -221,9 +233,11 @@ CREATE TRIGGER user_scheduled_sessions_conflict_trigger
 
 ### Conflict Detection System
 
-- Automatic detection of scheduling conflicts when users schedule overlapping sessions
-- The `has_conflict` column is automatically maintained by database triggers
+- Detection of scheduling conflicts when users schedule overlapping sessions
+- The `has_conflict` column is maintained through stored procedures called by the application
 - Conflicts are detected based on overlapping time slots on the same date
+- Uses stored procedures `schedule_session_for_user()` and `unschedule_session_for_user()` to prevent infinite recursion
+- Single UPDATE operation per user to efficiently update all conflict states
 
 ### Performance Optimizations
 

@@ -84,8 +84,8 @@ export default function Home() {
               Everything you need to manage conference sessions
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From browsing sessions to syncing with your calendar, we've got
-              you covered.
+              From browsing sessions to syncing with your calendar, we&apos;ve
+              got you covered.
             </p>
           </div>
 
