@@ -1,8 +1,23 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Search, Calendar, Filter, Share2, Clock, Users, Zap, Globe } from 'lucide-react'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Search,
+  Calendar,
+  Filter,
+  Share2,
+  Clock,
+  Users,
+  Zap,
+  Globe,
+} from "lucide-react";
 
 export default function Home() {
   return (
@@ -13,14 +28,15 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Never miss another{' '}
+              Never miss another{" "}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 session
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Never miss another session. Browse, filter, and schedule conference sessions with ease.
-              Smart AI parsing makes it simple to import any conference&apos;s schedule.
+              Never miss another session. Browse, filter, and schedule
+              conference sessions with ease. Smart AI parsing makes it simple to
+              import any conference&apos;s schedule.
             </p>
 
             {/* Search Bar */}
@@ -47,7 +63,11 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/admin">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
                   For Organizers
                 </Button>
               </Link>
@@ -64,7 +84,8 @@ export default function Home() {
               Everything you need to manage conference sessions
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From browsing sessions to syncing with your calendar, we've got you covered.
+              From browsing sessions to syncing with your calendar, we've got
+              you covered.
             </p>
           </div>
 
@@ -76,8 +97,9 @@ export default function Home() {
                 </div>
                 <CardTitle>Smart Search & Filtering</CardTitle>
                 <CardDescription>
-                  Find sessions by date, time, track, speaker, or difficulty level.
-                  Advanced filters help you discover relevant content quickly.
+                  Find sessions by date, time, track, speaker, or difficulty
+                  level. Advanced filters help you discover relevant content
+                  quickly.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -89,8 +111,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Calendar Sync</CardTitle>
                 <CardDescription>
-                  Add sessions directly to Google Calendar, Outlook, or export as ICS files.
-                  Never miss a session with automated reminders.
+                  Add sessions directly to Google Calendar, Outlook, or export
+                  as ICS files. Never miss a session with automated reminders.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -115,8 +137,9 @@ export default function Home() {
                 </div>
                 <CardTitle>AI-Powered Parsing</CardTitle>
                 <CardDescription>
-                  Upload conference schedules from web URLs with intelligent parsing.
-                  Our AI extracts sessions, speakers, and details automatically.
+                  Upload conference schedules from web URLs with intelligent
+                  parsing. Our AI extracts sessions, speakers, and details
+                  automatically.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -128,8 +151,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Conflict Detection</CardTitle>
                 <CardDescription>
-                  Get notified when sessions overlap in your schedule.
-                  Smart recommendations help you optimize your conference experience.
+                  Get notified when sessions overlap in your schedule. Smart
+                  recommendations help you optimize your conference experience.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -159,16 +182,25 @@ export default function Home() {
               Are you a conference organizer?
             </h2>
             <p className="text-xl opacity-90 mb-8">
-              Make your conference more accessible with EventSchedule.
-              Upload your schedule once and let attendees discover, filter, and schedule sessions effortlessly.
+              Make your conference more accessible with EventSchedule. Upload
+              your schedule once and let attendees discover, filter, and
+              schedule sessions effortlessly.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/admin">
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="w-full sm:w-auto"
+                >
                   Get Started Free
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-600">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-600"
+              >
                 Learn More
               </Button>
             </div>
@@ -181,20 +213,26 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">10,000+</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">
+                10,000+
+              </div>
               <div className="text-gray-600">Sessions Scheduled</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">500+</div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">
+                500+
+              </div>
               <div className="text-gray-600">Conferences Supported</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-green-600 mb-2">50,000+</div>
+              <div className="text-4xl font-bold text-green-600 mb-2">
+                50,000+
+              </div>
               <div className="text-gray-600">Happy Attendees</div>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
