@@ -1,16 +1,50 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
-import { Calendar, Mail, Lock, User, Github, Chrome } from 'lucide-react'
-import { supabase } from '@/lib/supabase/client'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
+// import { useState } from 'react'
+// import { Input } from '@/components/ui/input'
+// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+// import { Label } from '@/components/ui/label'
+// import { Separator } from '@/components/ui/separator'
+// import { Mail, Lock, User, Github, Chrome } from 'lucide-react'
+// import { supabase } from '@/lib/supabase/client'
 
 export default function SignUpPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full text-center space-y-6">
+        <Link href="/" className="flex items-center justify-center space-x-2">
+          <Calendar className="h-8 w-8 text-blue-600" />
+          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            EventSchedule
+          </span>
+        </Link>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Sign Up Temporarily Disabled
+        </h1>
+        <p className="text-gray-600">
+          We&apos;re putting the finishing touches on the experience. Accounts
+          will be available soon—thanks for your patience!
+        </p>
+        <div className="space-y-3">
+          <Link href="/auth/signin">
+            <Button className="w-full">Go to Sign In</Button>
+          </Link>
+          <Link href="/">
+            <Button variant="outline" className="w-full">
+              Return Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+
+  /*
+    Original signup implementation preserved for future use:
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -95,7 +129,7 @@ export default function SignUpPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full">
-                {/* Header */}
+                // Header
                 <div className="text-center mb-8">
                     <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
                         <Calendar className="h-8 w-8 text-blue-600" />
@@ -119,7 +153,7 @@ export default function SignUpPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        {/* Social Sign Up */}
+                        // Social Sign Up
                         <div className="space-y-3">
                             <Button
                                 variant="outline"
@@ -150,7 +184,7 @@ export default function SignUpPage() {
                             </div>
                         </div>
 
-                        {/* Email Sign Up Form */}
+                        // Email Sign Up Form
                         <form onSubmit={handleEmailSignUp} className="space-y-4">
                             {error && (
                                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
@@ -259,7 +293,7 @@ export default function SignUpPage() {
                             </Button>
                         </form>
 
-                        {/* Sign In Link */}
+                        // Sign In Link
                         <div className="text-center">
                             <p className="text-sm text-gray-600">
                                 Already have an account?{' '}
@@ -273,4 +307,5 @@ export default function SignUpPage() {
             </div>
         </div>
     )
-} 
+    */
+}

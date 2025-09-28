@@ -106,6 +106,7 @@ export default function TestAuthPage() {
     }
   };
 
+  /*
   const testSignUp = async () => {
     setLoading(true);
     try {
@@ -126,6 +127,7 @@ export default function TestAuthPage() {
       setLoading(false);
     }
   };
+  */
 
   const testSignIn = async () => {
     setLoading(true);
@@ -296,9 +298,9 @@ export default function TestAuthPage() {
             </div>
 
             <div className="flex gap-4">
-              <Button onClick={testSignUp} disabled={loading} variant="outline">
+              {/* <Button onClick={testSignUp} disabled={loading} variant="outline">
                 Test Sign Up
-              </Button>
+              </Button> */}
               <Button onClick={testSignIn} disabled={loading}>
                 Test Sign In
               </Button>
