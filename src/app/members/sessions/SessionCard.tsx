@@ -18,7 +18,7 @@ interface SessionCardProps {
 export default function SessionCard({ session, isScheduled }: SessionCardProps) {
     const [state, formAction, isPending] = useActionState(toggleScheduleSessionAction, { isScheduled })
 
-    const currentlyScheduled = state.isScheduled;
+    const { isScheduled: currentlyScheduled } = state;
     const actionButtonText = currentlyScheduled ? 'Remove from Schedule' : 'Add to Schedule';
     const actionButtonVariant = currentlyScheduled ? 'destructive' : 'default';
 
