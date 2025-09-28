@@ -45,10 +45,27 @@ export async function addSessionToSchedule(sessionId: number) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('No user session found')
+    
+    // Check if already scheduled to avoid unique constraint errors
+    const { data: existingSchedule } = await supabase
+        .from('user_scheduled_sessions')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('session_id', sessionId)
+        .single()
+    
+    if (existingSchedule) {
+        return true // Already scheduled, no need to insert again
+    }
+    
     const { error } = await supabase
         .from('user_scheduled_sessions')
         .insert([{ user_id: user.id, session_id: sessionId }])
-    if (error) throw new Error(error.message)
+    
+    if (error) {
+        console.error('Error adding session to schedule:', error)
+        throw new Error(error.message)
+    }
     return true
 }
 
@@ -56,11 +73,16 @@ export async function removeSessionFromSchedule(sessionId: number) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('No user session found')
+    
     const { error } = await supabase
         .from('user_scheduled_sessions')
         .delete()
         .eq('user_id', user.id)
         .eq('session_id', sessionId)
-    if (error) throw new Error(error.message)
+    
+    if (error) {
+        console.error('Error removing session from schedule:', error)
+        throw new Error(error.message)
+    }
     return true
 }

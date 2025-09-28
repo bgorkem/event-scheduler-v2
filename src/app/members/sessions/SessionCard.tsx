@@ -4,21 +4,22 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Clock, User, Loader } from 'lucide-react'
-import React, { useTransition } from 'react'
 import { useActionState } from 'react'
 import { toggleScheduleSessionAction } from '@/app/actions/schedule'
-
 
 interface SessionCardProps {
     session: any
     isScheduled: boolean
 }
 
-
 export default function SessionCard({ session, isScheduled }: SessionCardProps) {
-    const [state, formAction, isPending] = useActionState(toggleScheduleSessionAction, { isScheduled })
+    const [state, formAction, isPending] = useActionState(
+        toggleScheduleSessionAction, 
+        { isScheduled }
+    )
 
-    const { isScheduled: currentlyScheduled } = state;
+    // Use current state, but don't create infinite loops
+    const currentlyScheduled = state?.isScheduled ?? isScheduled;
     const actionButtonText = currentlyScheduled ? 'Remove from Schedule' : 'Add to Schedule';
     const actionButtonVariant = currentlyScheduled ? 'destructive' : 'default';
 
