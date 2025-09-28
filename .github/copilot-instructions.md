@@ -69,6 +69,46 @@ npm run dev  # Starts on localhost:3000
 - Existing DB: Run migration files in `migrations/` directory
 - Use Supabase SQL editor or local `psql` connection
 
+### Database Migration Workflow
+
+**CRITICAL**: Always follow proper migration workflow when making database changes, as the database is deployed to Supabase production.
+
+#### Before Making Any DDL/DML Changes:
+
+1. **Consult DATABASE_SETUP.md** - Review the complete setup guide and existing migration patterns
+2. **Never modify schema.sql directly** - This is for fresh installs only
+3. **Create migration files** for all database changes in `migrations/` directory
+4. **Follow naming convention**: `YYYYMMDD_descriptive_name.sql`
+
+#### Required Steps for Database Changes:
+
+```bash
+# 1. Create new migration file
+touch migrations/$(date +%Y%m%d)_your_change_description.sql
+
+# 2. Write your DDL/DML changes in the migration file
+# 3. Test locally first (if possible)
+# 4. Apply to Supabase production via SQL editor
+# 5. Update DATABASE_SETUP.md if needed
+# 6. Commit migration file to repository
+```
+
+#### Types of Changes Requiring Migrations:
+
+- **DDL Changes**: ALTER TABLE, CREATE TABLE, DROP TABLE, CREATE INDEX, etc.
+- **DML Changes**: INSERT sample data, UPDATE configurations, DELETE cleanup
+- **Function Changes**: CREATE OR REPLACE FUNCTION, stored procedures
+- **Policy Changes**: RLS policy modifications
+- **Trigger Changes**: CREATE TRIGGER, DROP TRIGGER modifications
+
+#### Migration Best Practices:
+
+- **Incremental**: Each migration should be focused on one logical change
+- **Reversible**: Consider rollback scenarios (document in comments)
+- **Safe**: Use IF EXISTS/IF NOT EXISTS where appropriate
+- **Tested**: Test on development database first when possible
+- **Documented**: Include comments explaining the purpose and impact
+
 ### Key Routes Structure
 
 - `/` - Landing page
